@@ -34,5 +34,5 @@ change the var i18n_options in the file app/i18n.config.mjs. Add any configurati
 
 # bugs
 
-As this is a refactoring and  did not tested all features of the i18n original pakage, thare must be some bugs. I plan to fix them as soon as I test all features. contributions are welcome.
+As this is a refactoring and  did not tested all features of the i18n original package, thare must be some bugs. I plan to fix them as soon as I test all features. contributions are welcome.
 But the __('') is working and plurals also as I tested them.
