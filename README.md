@@ -5,7 +5,7 @@ This is a boilerplate for internacionalization in Node.js
 Based on i18n with support to json and yaml (https://yaml.org/) files for translation.
 Based in the version 0.8.3 of the i18n module. refactored to ES6 and added yaml support.
 Using the Dependency injection with the  awilix module.
-using ejs as template engine for espress.
+using ejs as template engine for express.
 
 
 # i18n-node-boilerplate
@@ -21,7 +21,7 @@ Dependency injection makes your modules less coupled resulting in a more maintai
 
 # why ejs
 
-I prefer using ejs as template engine beause I can make any kind of use of the javascript to perform several tasks that mustahe and handlebar do not allow.
+I prefer using ejs as template engine because I can make any kind of use of the javascript to perform several tasks that mustache and handlebar do not allow.
 
 # how to use
 I did not have time to write the complet intructions yet. 
@@ -34,4 +34,5 @@ change the var i18n_options in the file app/i18n.config.mjs. Add any configurati
 
 # bugs
 
-As this is a refatoring and  did not tested all features of the i18n original pakage, thare must be some bugs. I plan to fix them as soon as I test all features. contributions are welcome.
+As this is a refactoring and  did not tested all features of the i18n original pakage, thare must be some bugs. I plan to fix them as soon as I test all features. contributions are welcome.
+But the __('') is working and plurals also as I tested them.
