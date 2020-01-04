@@ -18,7 +18,7 @@ export class i18n extends LocaleService{
       super(options);
       super.set_i18nObj(this);
       
-    };
+    }
   
   i18n(){
     return super.self;
@@ -58,7 +58,7 @@ export class i18n extends LocaleService{
         return next();
       }
     
-    }
+    };
    
   }
 
@@ -79,7 +79,7 @@ export class i18n extends LocaleService{
         }
       }
       next();
-    }
+    };
   }
 
 
@@ -115,15 +115,16 @@ export class i18n extends LocaleService{
   
       // head over to postProcessing
       return other.postProcess(msg, namedValues, args);
-    };
+    }
   
     __mf(phrase) {
+      var other = super.getSelfFromObject();
       var msg, mf, f;
-      var targetLocale = defaultLocale;
+      var targetLocale = other.defaultLocale;
       var argv = super.parseArgv(arguments);
       var namedValues = argv[0];
       var args = argv[1];
-      var other = super.getSelfFromObject();
+      
       
       // called like __({phrase: "Hello", locale: "en"})
       if (typeof phrase === 'object') {
@@ -144,12 +145,12 @@ export class i18n extends LocaleService{
   
       // now head over to Messageformat
       // and try to cache instance
-      if (MessageformatInstanceForLocale[targetLocale]) {
-        mf = MessageformatInstanceForLocale[targetLocale];
+      if (other.MessageformatInstanceForLocale[targetLocale]) {
+        mf = other.MessageformatInstanceForLocale[targetLocale];
       } else {
         mf = new Messageformat(targetLocale);
         mf.compiledFunctions = {};
-        MessageformatInstanceForLocale[targetLocale] = mf;
+        other.MessageformatInstanceForLocale[targetLocale] = mf;
       }
   
       // let's try to cache that function
@@ -161,7 +162,7 @@ export class i18n extends LocaleService{
       }
   
       return super.postProcess(f(namedValues), namedValues, args);
-    };
+    }
   
     __l(phrase) {
       var translations = [];
@@ -170,7 +171,7 @@ export class i18n extends LocaleService{
         translations.push(other.__({ phrase: phrase, locale: l }));
       });
       return translations;
-    };
+    }
   
     __h(phrase) {
       var translations = [];
@@ -181,7 +182,7 @@ export class i18n extends LocaleService{
         translations.push(hash);
       });
       return translations;
-    };
+    }
   
     __n(singular, plural, count) {
       var msg, namedValues, targetLocale, args = [];
@@ -267,7 +268,7 @@ export class i18n extends LocaleService{
   
       // head over to postProcessing
       return super.postProcess(msg, namedValues, args, count);
-    };
+    }
   
     setLocale(object, locale, skipImplicitObjects) {
       var other = super.getSelfFromObject();
@@ -337,7 +338,7 @@ export class i18n extends LocaleService{
       }
   
       return other.getLocale(targetObject);
-    };
+    }
   
     getLocale(request) {
       var other = super.getSelfFromObject();
@@ -348,7 +349,7 @@ export class i18n extends LocaleService{
   
       // called like req.getLocale()
       return this.locale || other.defaultLocale;
-    };
+    }
   
     getCatalog(object, locale) {
       var targetLocale;
@@ -386,32 +387,32 @@ export class i18n extends LocaleService{
         return other.locales;
       }
   
-      if (!other.locales[targetLocale] && fallbacks[targetLocale]) {
-        targetLocale = fallbacks[targetLocale];
+      if (!other.locales[targetLocale] && other.fallbacks[targetLocale]) {
+        targetLocale = other.fallbacks[targetLocale];
       }
   
       if (other.locales[targetLocale]) {
         return other.locales[targetLocale];
       } else {
-        logWarn('No catalog found for "' + targetLocale + '"');
+        other.logWarn('No catalog found for "' + targetLocale + '"');
         return false;
       }
-    };
+    }
   
     getLocales() {
       var other = super.getSelfFromObject();
       return Object.keys(other.locales);
-    };
+    }
   
     addLocale(locale) {
       var other = super.getSelfFromObject();
       other.read(locale);
-    };
+    }
   
     removeLocale(locale) {
       var other = super.getSelfFromObject();
       delete other.locales[locale];
-    };
+    }
   
     /**
    * guess language setting based on http headers
@@ -504,8 +505,8 @@ export class i18n extends LocaleService{
     }
 
     // last resort: defaultLocale
-    return this.setLocale(request, defaultLocale);
-  };
+    return this.setLocale(request, this.defaultLocale);
+  }
 
   
   /**
@@ -531,7 +532,7 @@ export class i18n extends LocaleService{
 
     // set initial locale if not set
     if (!object.locale) {
-      object.locale = defaultLocale;
+      object.locale = this.defaultLocale;
     }
 
     // escape recursion
@@ -548,7 +549,7 @@ export class i18n extends LocaleService{
     if (object.locals) {
       this.applyAPItoObject(object.locals);
     }
-  };
+  }
 
   /**translate
    * read locale file, translate a msg and write to fs if new
@@ -561,11 +562,11 @@ export class i18n extends LocaleService{
     
     // add same key to all translations
     if (!skipSyncToAllFiles && provider.syncFiles) {
-      syncToAllFiles(singular, plural);
+      provider.syncToAllFiles(singular, plural);
     }
     
     if (locale === undefined) {
-      logWarn('WARN: No locale found - check the context of the call to __(). Using ' +
+      provider.logWarn('WARN: No locale found - check the context of the call to __(). Using ' +
       provider.defaultLocale + ' as current locale');
       locale = provider.defaultLocale;
     }
@@ -582,7 +583,7 @@ export class i18n extends LocaleService{
     // fallback to default when missed
     if (!provider.locales[locale]) {
 
-      logWarn('WARN: Locale ' + locale +
+      provider.logWarn('WARN: Locale ' + locale +
         ' couldn\'t be read - check the context of the call to $__. Using ' +
         provider.defaultLocale + ' (default) as current locale');
 
@@ -629,6 +630,6 @@ export class i18n extends LocaleService{
     }
 
     return accessor(provider);
-  };
+  }
 
 } 

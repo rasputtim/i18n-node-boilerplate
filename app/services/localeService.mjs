@@ -60,10 +60,10 @@ export class LocaleService {
    *
    * @param i18nProvider The i18n provider
    */
-  constructor({my_options}) {
+  constructor({myOptions}) {
     this.version = '0.8.3';
     
-    this.i18n_options = my_options;
+    this.i18nOptions = myOptions;
     // reset locales
     this.locales = {};
     this.PluralsForLocale = {};
@@ -71,26 +71,26 @@ export class LocaleService {
     //console.log("CREATED THE LocaleServie");
     // Store a reference to your object
     // where to store json files
-    this.directory = (typeof this.i18n_options.directory === 'string') ?
-    this.i18n_options.directory : path.join(__dirname, 'locales');
+    this.directory = (typeof this.i18nOptions.directory === 'string') ?
+    this.i18nOptions.directory : path.join(__dirname, 'locales');
 
 
     // permissions when creating new directories
-    this.directoryPermissions = (typeof this.i18n_options.directoryPermissions === 'string') ?
-    parseInt(this.i18n_options.directoryPermissions, 8) : null;
+    this.directoryPermissions = (typeof this.i18nOptions.directoryPermissions === 'string') ?
+    parseInt(this.i18nOptions.directoryPermissions, 8) : null;
 
 
     // setting custom logger functions
-    this.logDebugFn = (typeof this.i18n_options.logDebugFn === 'function') ? this.i18n_options.logDebugFn : debug;
-    this.logWarnFn = (typeof this.i18n_options.logWarnFn === 'function') ? this.i18n_options.logWarnFn : warn;
-    this.logErrorFn = (typeof this.i18n_options.logErrorFn === 'function') ? this.i18n_options.logErrorFn : error;
+    this.logDebugFn = (typeof this.i18nOptions.logDebugFn === 'function') ? this.i18nOptions.logDebugFn : debug;
+    this.logWarnFn = (typeof this.i18nOptions.logWarnFn === 'function') ? this.i18nOptions.logWarnFn : warn;
+    this.logErrorFn = (typeof this.i18nOptions.logErrorFn === 'function') ? this.i18nOptions.logErrorFn : error;
 
 
     // json files prefix
-    this.prefix = (typeof this.i18n_options.prefix === 'string') ? this.i18n_options.prefix : '';
+    this.prefix = (typeof this.i18nOptions.prefix === 'string') ? this.i18nOptions.prefix : '';
 
     // write new locale information to disk
-    this.updateFiles = (typeof this.i18n_options.updateFiles === 'boolean') ? this.i18n_options.updateFiles : true;
+    this.updateFiles = (typeof this.i18nOptions.updateFiles === 'boolean') ? this.i18nOptions.updateFiles : true;
 
     this.api = {
       'i18n' : 'i18n',
@@ -109,11 +109,11 @@ export class LocaleService {
 
       // Provide custom API method aliases if desired
       // This needs to be processed before the first call to applyAPItoObject()
-      if (this.i18n_options.api && typeof this.i18n_options.api === 'object') {
-        for (var method in this.i18n_options.api) {
-          if (this.i18n_options.api.hasOwnProperty(method)) {
-            var alias = this.i18n_options.api[method];
-            if (typeof api[method] !== 'undefined') {
+      if (this.i18nOptions.api && typeof this.i18nOptions.api === 'object') {
+        for (var method in this.i18nOptions.api) {
+          if (this.i18nOptions.api.hasOwnProperty(method)) {
+            var alias = this.i18nOptions.api[method];
+            if (typeof this.api[method] !== 'undefined') {
               this.api[method] = alias;
             }
           }
@@ -121,69 +121,69 @@ export class LocaleService {
       }
   
       // you may register i18n in global scope, up to you
-      if (typeof this.i18n_options.register === 'object') {
-        this.register = this.i18n_options.register;
+      if (typeof this.i18nOptions.register === 'object') {
+        this.register = this.i18nOptions.register;
         // or give an array objects to register to
-        if (Array.isArray(this.i18n_options.register)) {
-          this.register = this.i18n_options.register;
+        if (Array.isArray(this.i18nOptions.register)) {
+          this.register = this.i18nOptions.register;
           this.register.forEach(function(r) {
             applyAPItoObject(r);
           });
         } else {
-          applyAPItoObject(this.i18n_options.register);
+          applyAPItoObject(this.i18nOptions.register);
         }
       }
   
       // sets a custom cookie name to parse locale settings from
-      this.cookiename = (typeof this.i18n_options.cookie === 'string') ? this.i18n_options.cookie : null;
+      this.cookiename = (typeof this.i18nOptions.cookie === 'string') ? this.i18nOptions.cookie : null;
   
       // query-string parameter to be watched - @todo: add test & doc
-      this.queryParameter = (typeof this.i18n_options.queryParameter === 'string') ? this.i18n_options.queryParameter : null;
+      this.queryParameter = (typeof this.i18nOptions.queryParameter === 'string') ? this.i18nOptions.queryParameter : null;
   
   
       // sync locale information accros all files
-      this.syncFiles = (typeof this.i18n_options.syncFiles === 'boolean') ? this.i18n_options.syncFiles : false;
+      this.syncFiles = (typeof this.i18nOptions.syncFiles === 'boolean') ? this.i18nOptions.syncFiles : false;
   
       // what to use as the indentation unit (ex: "\t", "  ")
-      this.indent = (typeof this.i18n_options.indent === 'string') ? this.i18n_options.indent : '\t';
-        if (this.i18n_options.extension === '.yaml') {
-            this.i18n_options.extension = '.yml';
+      this.indent = (typeof this.i18nOptions.indent === 'string') ? this.i18nOptions.indent : '\t';
+        if (this.i18nOptions.extension === '.yaml') {
+            this.i18nOptions.extension = '.yml';
         }
   
       // setting defaultLocale
-      this.defaultLocale = (typeof this.i18n_options.defaultLocale === 'string') ? this.i18n_options.defaultLocale : 'en';
+      this.defaultLocale = (typeof this.i18nOptions.defaultLocale === 'string') ? this.i18nOptions.defaultLocale : 'en';
       //change rasputtim
       // Schema to be used for yaml files (ex: require("js-yaml/lib/js-yaml/schema/default_full"))
-      this.yamlSchema = this.i18n_options.schema;
+      this.yamlSchema = this.i18nOptions.schema;
   
   
       // enable object notation?
-      this.objectNotation = (typeof this.i18n_options.objectNotation !== 'undefined') ? this.i18n_options.objectNotation : false;
+      this.objectNotation = (typeof this.i18nOptions.objectNotation !== 'undefined') ? this.i18nOptions.objectNotation : false;
       if (this.objectNotation === true) this.objectNotation = '.';
   
       // read language fallback map
-      this.fallbacks = (typeof this.i18n_options.fallbacks === 'object') ? this.i18n_options.fallbacks : {};
+      this.fallbacks = (typeof this.i18nOptions.fallbacks === 'object') ? this.i18nOptions.fallbacks : {};
   
       // when missing locales we try to guess that from directory
-      this.i18n_options.locales = this.i18n_options.locales || guessLocales(directory);
+      this.i18nOptions.locales = this.i18nOptions.locales || this.guessLocales(this.directory);
 
 
 
 
 
 
-    // implicitly read all locales
-    if (Array.isArray(this.i18n_options.locales) ) {
+    // implicitly read all localesi
+    if (Array.isArray(this.i18nOptions.locales) ) {
      
-      this.i18n_options.locales.forEach((l) =>{
+      this.i18nOptions.locales.forEach((l) =>{
         this.read(l);
       });
 
       // auto reload locale files when changed
-      if (this.i18n_options.autoReload) {
+      if (this.i18nOptions.autoReload) {
 
         // watch changes of locale files (it's called twice because fs.watch is still unstable)
-        fs.watch(directory, function(event, filename) {
+        fs.watch(this.directory, function(event, filename) {
           var localeFromFile = this.guessLocaleFromFile(filename);
 
          // if (localeFromFile &&  this.i18nProvider.i18n.locales.indexOf(localeFromFile) > -1) {
@@ -205,9 +205,9 @@ export class LocaleService {
   
 //private methods
 
-my_vsprintf(str, replace2){
+myVsprintf(str, replace2){
 var replace = replace2[0];
-  //my_vsprintf (str, replace);
+  //myVsprintf (str, replace);
   for (var _len = arguments.length, args = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
     args[_key - 2] = arguments[_key];
   }
@@ -245,7 +245,7 @@ if (typeof replace === 'string' || !isNaN(replace)) {
         // parsing filecontents to locales[locale]
         //changes rasputtim (.yml)
         //locales[locale] = JSON.parse(localeFile);
-        switch (this.i18n_options.extension) {
+        switch (this.i18nOptions.extension) {
           case '.yml':
             this.locales[locale] = jsyaml.load(localeFile, {schema: this.yamlSchema});
             break;
@@ -254,7 +254,7 @@ if (typeof replace === 'string' || !isNaN(replace)) {
         }
       } catch (parseError) {
         this.logError('unable to parse locales from file (maybe ' +
-          file + ' is empty or invalid '+this.i18n_options.extension+'?): ', parseError);
+          file + ' is empty or invalid '+this.i18nOptions.extension+'?): ', parseError);
       }
     } catch (readError) {
       // unable to read, so intialize that file
@@ -263,14 +263,14 @@ if (typeof replace === 'string' || !isNaN(replace)) {
 
       // since the current invalid locale could exist, we should back it up
       if (fs.existsSync(file)) {
-        logDebug('backing up invalid locale ' + locale + ' to ' + file + '.invalid');
+        this.logDebug('backing up invalid locale ' + locale + ' to ' + file + '.invalid');
         fs.renameSync(file, file + '.invalid');
       }
 
       this.logDebug('initializing ' + file);
       this.write(locale);
     }
-  };
+  }
 
   /**
    * try writing a file in a created directory
@@ -298,19 +298,19 @@ if (typeof replace === 'string' || !isNaN(replace)) {
 
     // writing to tmp and rename on success
     try {
-      target = getStorageFilePath(locale);
+      target = this.getStorageFilePath(locale);
       tmp = target + '.tmp';
       // changes rasputtim
       //fs.writeFileSync(tmp, JSON.stringify(locales[locale], null, indent), 'utf8');
       var fileContents = '';
-    switch (this.i18n_options.extension) {
+    switch (this.i18nOptions.extension) {
       case '.yml':
         fileContents = jsyaml.dump(this.locales[locale]);
           break;
       default:
-        fileContents = JSON.stringify(this.locales[locale], null, indent);
+        fileContents = JSON.stringify(this.locales[locale], null, this.indent);
     }
-    fs.writeFileSync(tmp, fileContents, "utf8");
+    fs.writeFileSync(tmp, fileContents, 'utf8');
       stats = fs.statSync(tmp);
       if (stats.isFile()) {
         fs.renameSync(tmp, target);
@@ -322,28 +322,28 @@ if (typeof replace === 'string' || !isNaN(replace)) {
       this.logError('unexpected error writing files (either ' +
         tmp + ' or ' + target + ' are not writeable?): ', e);
     }
-  };
+  }
 
   /**
    * basic normalization of filepath
    */
   getStorageFilePath(locale) {
     // changed API to use .json as default, #16
-    var ext = this.i18n_options.extension || '.json',
+    var ext = this.i18nOptions.extension || '.json',
       filepath = path.normalize(this.directory + this.pathsep + this.prefix + locale + ext),
       filepathJS = path.normalize(this.directory + this.pathsep + this.prefix + locale + '.js');
     // use .js as fallback if already existing
     try {
       if (fs.statSync(filepathJS)) {
-        logDebug('using existing file ' + filepathJS);
-        this.i18n_options.extension = '.js';
+        this.logDebug('using existing file ' + filepathJS);
+        this.i18nOptions.extension = '.js';
         return filepathJS;
       }
     } catch (e) {
       this.logDebug('will use ' + filepath);
     }
     return filepath;
-  };
+  }
 
   /**
    * Logging proxies
@@ -367,12 +367,12 @@ if (typeof replace === 'string' || !isNaN(replace)) {
     var other = LocaleService.i18nObj;
     // test for parsable interval string
     if ((/\|/).test(msg)) {
-      msg = parsePluralInterval(msg, count);
+      msg = this.parsePluralInterval(msg, count);
     }
 
     // replace the counter
     if (typeof count === 'number') {
-      msg = other.my_vsprintf(msg, [parseInt(count, 10)]);
+      msg = other.myVsprintf(msg, [parseInt(count, 10)]);
     }
 
     // if the msg string contains {{Mustache}} patterns we render it as a mini tempalate
@@ -383,17 +383,17 @@ if (typeof replace === 'string' || !isNaN(replace)) {
     // if we have extra arguments with values to get replaced,
     // an additional substition injects those strings afterwards
     if ((/%/).test(msg) && args && args.length > 0) {
-      msg = my_vsprintf(msg, args);
+      msg = other.myVsprintf(msg, args);
     }
 
     return msg;
-  };
+  }
 
   argsEndWithNamedObject(args) {
     return (args.length > 1 &&
       args[args.length - 1] !== null &&
       typeof args[args.length - 1] === 'object');
-  };
+  }
 
   parseArgv(args) {
     var namedValues, returnArgs;
@@ -410,7 +410,7 @@ if (typeof replace === 'string' || !isNaN(replace)) {
     }
 
     return [namedValues, returnArgs];
-  };
+  }
 
   /**
    * tries to guess locales by scanning the given directory
@@ -422,25 +422,25 @@ if (typeof replace === 'string' || !isNaN(replace)) {
 
     for (var i = entries.length - 1; i >= 0; i--) {
       if (entries[i].match(/^\./)) continue;
-      var localeFromFile = guessLocaleFromFile(entries[i]);
+      var localeFromFile = this.guessLocaleFromFile(entries[i]);
       if (localeFromFile) localesFound.push(localeFromFile);
     }
 
     return localesFound.sort();
-  };
+  }
 
   /**
    * tries to guess locales from a given filename
    */
  
    guessLocaleFromFile(filename) {
-    var extensionRegex = new RegExp(extension + '$', 'g');
-    var prefixRegex = new RegExp('^' + prefix, 'g');
+    var extensionRegex = new RegExp(this.extension + '$', 'g');
+    var prefixRegex = new RegExp('^' + this.prefix, 'g');
 
-    if (prefix && !filename.match(prefixRegex)) return false;
-    if (extension && !filename.match(extensionRegex)) return false;
-    return filename.replace(prefix, '').replace(extensionRegex, '');
-  };
+    if (this.prefix && !filename.match(prefixRegex)) return false;
+    if (this.extension && !filename.match(extensionRegex)) return false;
+    return filename.replace(this.prefix, '').replace(extensionRegex, '');
+  }
 
   
   /**
@@ -467,20 +467,20 @@ if (typeof replace === 'string' || !isNaN(replace)) {
     }).sort(function sortLanguages(a, b) {
       return preferences[b] - preferences[a];
     });
-  };
+  }
 
 get_i18nOpj(){
   return LocaleService.i18nObj;
-}; 
+} 
 
 set_i18nObj(valor){
   LocaleService.i18nObj = valor;
-};
+}
 
 getSelfFromObject(){
   var este = LocaleService.i18nObj;
   return este;
-};
+}
 
   /**
    * searches for locale in given object
@@ -495,7 +495,7 @@ getSelfFromObject(){
       locale = obj.locale;
     }
     return locale;
-  };
+  }
 
   /**
    * splits and parses a phrase for mathematical interval expressions
@@ -511,7 +511,7 @@ getSelfFromObject(){
 
       // not the same as in combined condition
       if (matches[1]) {
-        if (matchInterval(count, matches[1]) === true) {
+        if (this.matchInterval(count, matches[1]) === true) {
           returnPhrase = matches[2];
           return true;
         }
@@ -521,7 +521,7 @@ getSelfFromObject(){
 
     });
     return returnPhrase;
-  };
+  }
 
   /**
    * test a number to match mathematical interval expressions
@@ -546,7 +546,7 @@ getSelfFromObject(){
         Math.max(interval.to.value, number) === interval.to.value);
     }
     return false;
-  };
+  }
 
  
 
@@ -559,10 +559,10 @@ getSelfFromObject(){
     // iterate over locales and translate again
     // this will implicitly write/sync missing keys
     // to the rest of locales
-    for (var l in locales) {
+    for (var l in this.locales) {
       this.translate(l, singular, plural, true);
     }
-  };
+  }
 
   /**
    * Allows delayed access to translations nested inside objects.
@@ -618,7 +618,7 @@ getSelfFromObject(){
         // If we need to re-traverse (because we didn't find our target term)
         // traverse again and return the new result (but don't allow further iterations)
         // or return the previously found accessor if it was already valid.
-        return (reTraverse) ? localeAccessor(locale, singular, false)() : accessor();
+        return (reTraverse) ? this.localeAccessor(locale, singular, false)() : accessor();
       };
 
     } else {
@@ -628,7 +628,7 @@ getSelfFromObject(){
         return other.locales[locale][singular];
       };
     }
-  };
+  }
 
   /**
    * Allows delayed mutation of a translation nested inside objects.
@@ -709,7 +709,7 @@ getSelfFromObject(){
         // invoke the search again, but allow branching
         // this time (because here the mutator is being invoked)
         // otherwise, just change the value directly.
-        return (reTraverse) ? localeMutator(locale, singular, true)(value) : accessor(value);
+        return (reTraverse) ? this.localeMutator(locale, singular, true)(value) : accessor(value);
       };
 
     } else {
@@ -719,7 +719,7 @@ getSelfFromObject(){
         return value;
       };
     }
-  };
+  }
 
 
 

@@ -1,9 +1,11 @@
 import awilix from 'awilix';
-import {i18n_options } from './i18n.config.mjs';
+import {i18nOptions } from './i18n.config.mjs';
 import { i18n } from './services/i18n.mjs';
 import { Application } from './application.mjs';
 import { Server } from './server.mjs'
 import { LocaleService }  from './services/localeService.mjs';
+
+
 
 const container = awilix.createContainer();
 
@@ -15,7 +17,7 @@ container
     server: awilix.asClass(Server, { lifetime: awilix.Lifetime.SINGLETON }),
   })
   .register({
-    i18nProvider: awilix.asClass(i18n, { lifetime: awilix.Lifetime.SINGLETON }).inject(() => ({ LocaleService, my_options: i18n_options }))
+    i18nProvider: awilix.asClass(i18n, { lifetime: awilix.Lifetime.SINGLETON }).inject(() => ({ LocaleService, myOptions: i18nOptions }))
   })
  // .register({
   //  localeService: awilix.asClass(LocaleService, { lifetime: awilix.Lifetime.SINGLETON }).inject(() => ({ my_options: i18n_options }))

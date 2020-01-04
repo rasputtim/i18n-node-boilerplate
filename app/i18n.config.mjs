@@ -1,7 +1,7 @@
 //import { i18n } from './services/i18n.mjs';
 import path from 'path';
 
-var i18n_options = {
+var i18nOptions = {
   extension: '.yml',
   locales: ['en', 'el'],
   defaultLocale: 'en',
@@ -13,5 +13,5 @@ var i18n_options = {
 
 export { 
   //i18n,
-  i18n_options
-}
+  i18nOptions
+};

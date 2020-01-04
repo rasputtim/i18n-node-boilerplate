@@ -30,7 +30,7 @@ excelent tutorial: https://phrase.com/blog/posts/node-js-i18n-guide/ as a study 
 
 # i18n configuration options
 
-change the var i18n_options in the file app/i18n.config.mjs. Add any configuration as required by the i18n package.
+change the var i18nOptions in the file app/i18n.config.mjs. Add any configuration as required by the i18n package.
 
 # bugs
 
