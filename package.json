@@ -21,7 +21,7 @@
     "debug": "*",
     "ejs": "^3.0.1",
     "esm": "^3.2.25",
-    "express": "^4.16.2",
+    "express": "^4.17.3",
     "js-yaml": "^3.13.1",
     "make-plural": "^6.0.1",
     "make-plural-compiler": "^5.0.0",
